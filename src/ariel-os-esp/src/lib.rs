@@ -88,7 +88,18 @@ pub fn init() -> OptionalPeripherals {
     let config = esp_hal::Config::default().with_cpu_clock(esp_hal::clock::CpuClock::max());
 
     #[allow(unused_mut, reason = "mut only needed for some features")]
-    let mut peripherals = OptionalPeripherals::from(esp_hal::init(config));
+    let mut esp_peripherals = esp_hal::init(config);
+
+    let (start, size) = esp_hal::psram::psram_raw_parts(&esp_peripherals.PSRAM);
+    ariel_os_log::debug!("PSRAM start and size: {:?}, {:?}", start, size);
+
+    esp_alloc::psram_allocator!(esp_peripherals.PSRAM, esp_hal::psram);
+
+    let stats: esp_alloc::HeapStats = esp_alloc::HEAP.stats();
+    ariel_os_log::debug!("HeapStats: {:?}", defmt::Debug2Format(&stats));
+
+    #[allow(unused_mut, reason = "mut only needed for some features")]
+    let mut peripherals: OptionalPeripherals = OptionalPeripherals::from(esp_peripherals);
 
     #[cfg(feature = "hwrng")]
     {

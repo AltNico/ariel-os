@@ -7,3 +7,6 @@ features = ['all']
 [unstable.git]
 shallow_index = true
 shallow_deps = true
+
+[env]
+ESP_HAL_CONFIG_PSRAM_MODE = "octal"

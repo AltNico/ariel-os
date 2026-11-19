@@ -107,6 +107,7 @@ mod alloc {
             );
             esp_alloc::heap_allocator!(size: EXTRA_HEAP_SIZE);
         }
+        // esp_alloc::psram_allocator!(peripherals.PSRAM, esp_hal::psram);  // how to get `peripherals` from `esp_hal::init()` in ariel-os-esp?
     }
 
     /// Initializes **no** heap.

@@ -23,7 +23,7 @@ esp-alloc = { workspace = true, default-features = false, features = [
   "compat",
   "global-allocator",
 ] }
-esp-hal = { workspace = true, default-features = false }
+esp-hal = { workspace = true, default-features = false, features = ["psram"] }
 esp-metadata-generated = { workspace = true }
 
 [target.'cfg(context = "ariel-os")'.dev-dependencies]
